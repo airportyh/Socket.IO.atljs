@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<title>Chat</title>
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script>
+var yourName = prompt('What is your name?')
+var socket = io.connect('http://localhost:8080')
+socket.on('msg', function(data){
+	display(data)
+})
+
+function sendMsg(){
+	socket.emit('msg', yourName + ': ' + inputField.value)
+	display(yourName + ': ' + inputField.value)
+	inputField.value = ''
+}
+
+function display(msg){
+	log.innerHTML += msg + '<br>'
+}
+</script>
+</head>
+<body>
+<form onsubmit="sendMsg(); return false;">
+	<input id="inputField" type="text" size="50"/>
+</form>
+<pre id="log"></pre>
+</body>
+</html>
